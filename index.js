@@ -13,7 +13,15 @@ app.get('/api/members', (req, res) => res.json(members));
 
 // Get single member
 app.get('/api/members/:id', (req, res) => {
-  res.json(members.filter((member) => member.id === parseInt(req.params.id)));
+  // If exists, found is true, if doesn't exist, found equals false
+  const found = members.some(
+    (member) => member.id === parseInt(req.paramams.id)
+  );
+  if (found) {
+    res.json(members.filter((member) => member.id === parseInt(req.params.id)));
+  } else {
+    res.status(400).json({ msg: `No member with ID of ${req.params.id}` });
+  }
 });
 
 // Set static folder
